@@ -1,0 +1,22 @@
+[project]
+name = "deliversy"
+version = "0.1.0"
+description = "primal versiom"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "asyncpg>=0.31.0",
+    "fastapi[standard]>=0.141.1",
+    "greenlet>=3.5.5",
+    "psycopg2>=2.9.12",
+    "sqlalchemy>=2.0.52",
+    "sqlmodel>=0.0.39",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.16.3",
+]
+
+[tool.ruff.lint]
+ignore = ["B008"]
