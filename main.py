@@ -2,18 +2,14 @@ from fastapi import Depends, FastAPI
 from sqlmodel import Session
 
 from db import create_db, get_session
-from models import Order, OrderItem, Product, User
-from requests import (
+from products.models import Product
+from orders.models import Order, OrderItem
+from products.requests import create_product, get_all_products, get_product_by_id
+from orders.requests import  (
     create_order,
     create_order_item,
-    create_product,
-    create_user,
-    get_all_products,
-    get_all_users,
     get_order_items_by_order_id,
     get_orders_by_user_id,
-    get_product_by_id,
-    get_user_by_id,
 )
 
 app = FastAPI(title="Deliversy API")
@@ -21,21 +17,6 @@ app = FastAPI(title="Deliversy API")
 @app.on_event("startup")
 def on_startup():
     create_db()
-
-@app.post("/users", response_model=User)
-def post_user(username:str, email:str, session: Session = Depends(get_session)):
-    user = create_user(username, email, session)
-    return user
-
-@app.get("/users/{user_id}", response_model=User)
-def get_user(user_id: int, session: Session = Depends(get_session)):
-    user = get_user_by_id(user_id, session)
-    return user
-
-@app.get("/users", response_model=list[User])
-def get_users(session: Session = Depends(get_session)):
-    users = get_all_users(session)
-    return users
 
 @app.post("/products", response_model=Product)
 def post_product(name: str, description: str, price: float, quantity: int, session: Session = Depends(get_session)):
