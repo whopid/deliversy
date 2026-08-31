@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session, sessionmaker
 from sqlmodel import SQLModel
 
 from env import USERS_DATABASE_URL
-from users.models import User
+from users.models import Address, User
 
 users_engine = create_engine(USERS_DATABASE_URL, echo=True)
 
@@ -17,7 +17,7 @@ users_session_maker = sessionmaker(
 def create_users_db():
     SQLModel.metadata.create_all(
         users_engine,
-        tables=[User.__table__],
+        tables=[User.__table__, Address.__table__],
     )
 
 def get_users_session():

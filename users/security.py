@@ -1,11 +1,12 @@
+from datetime import UTC, datetime, timedelta
+
 import jwt
-from datetime import datetime, timezone, timedelta
 
 from env import ACCESS_TOKEN_EXPIRE_MINUTES, ALGORITHM, SECRET_JWT_KEY
 
 
 def create_access_token(email: str) -> str:
-    expire = datetime.now(timezone.utc) + timedelta(
+    expire = datetime.now(UTC) + timedelta(
         minutes=ACCESS_TOKEN_EXPIRE_MINUTES
     )
 

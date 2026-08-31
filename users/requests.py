@@ -2,7 +2,7 @@ import bcrypt
 from sqlalchemy.orm import Session
 from sqlmodel import select
 
-from users.models import User, Address
+from users.models import Address, User
 
 
 def create_user(username: str, email: str, password: str, session: Session) -> User:

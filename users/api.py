@@ -2,10 +2,17 @@ from fastapi import Depends, FastAPI, HTTPException
 from sqlmodel import Session
 
 from users.db import create_users_db, get_users_session
-from users.models import User, Address
+from users.models import Address, User
+from users.requests import (
+    create_user,
+    create_user_address,
+    delete_address,
+    get_addresses,
+    get_all_users,
+    get_user_by_id,
+    verify_password,
+)
 from users.security import create_access_token
-from users.requests import create_user, get_all_users, get_user_by_id, create_user_address, get_addresses, \
-    delete_address, verify_password
 
 app = FastAPI(title="Users API")
 
