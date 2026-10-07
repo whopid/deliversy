@@ -25,3 +25,20 @@ class OrderItem(SQLModel, table=True):
     product_name: str
     price: float
     quantity: int
+
+class ProductResponse(SQLModel, table=False):
+    id: int
+    name: str
+    description: str
+    price: float
+    quantity: int
+    created_at: datetime
+
+class OrderItemCreate(SQLModel, table=False):
+    product_id: int
+    quantity: int
+
+class OrderCreate(SQLModel, table=False):
+    user_id: int
+    delivery_address: str
+    items: list[OrderItemCreate]

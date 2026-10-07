@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import Session, sessionmaker
-from sqlmodel import SQLModel
+from sqlalchemy.orm import sessionmaker
+from sqlmodel import Session, SQLModel
 
 from env import ORDERS_DATABASE_URL
 from orders.models import Order, OrderItem

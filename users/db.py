@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
-from sqlalchemy.orm import Session, sessionmaker
-from sqlmodel import SQLModel
+from sqlalchemy.orm import sessionmaker
+from sqlmodel import Session, SQLModel
 
 from env import USERS_DATABASE_URL
 from users.models import Address, User

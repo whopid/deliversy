@@ -1,4 +1,4 @@
-from fastapi import Depends, FastAPI
+from fastapi import Depends, FastAPI, HTTPException
 from sqlmodel import Session
 
 from delivery.db import create_delivery_db, get_delivery_session
@@ -25,7 +25,8 @@ def post_delivery(order_id: int, courier_id: int,  session: Session = Depends(ge
 
 @app.get("/deliveries/{delivery_id}", response_model=Delivery)
 def get_delivery(delivery_id: int, session: Session = Depends(get_delivery_session)):
-    delivery = get_delivery_by_id(delivery_id, session)
+    if not (delivery := get_delivery_by_id(delivery_id, session)):
+        raise HTTPException(status_code=404, detail="Delivery not found")
     return delivery
 
 @app.patch("/deliveries/{delivery_id}/status", response_model=Delivery)
@@ -40,11 +41,12 @@ def post_courier(name: str, session: Session = Depends(get_delivery_session)):
 
 @app.get("/couriers/{courier_id}", response_model=Courier)
 def get_courier(courier_id: int, session: Session = Depends(get_delivery_session)):
-    courier = get_courier_by_id(courier_id, session)
+    if not (courier := get_courier_by_id(courier_id, session)):
+        raise HTTPException(status_code=404, detail="Courier not found")
     return courier
 
 @app.get("/couriers", response_model=list[Courier])
 def get_couriers(session: Session = Depends(get_delivery_session)):
-    couriers = get_all_couriers(session)
+    if not (couriers := get_all_couriers(session)):
+        raise HTTPException(status_code=404, detail="Couriers not found")
     return couriers
-

@@ -1,25 +1,18 @@
-from sqlalchemy.orm import Session
-from sqlmodel import select
+from sqlmodel import Session, select
 
 from orders.models import Order, OrderItem
 
 
 def get_orders_by_user_id(user_id: int, session: Session) -> list[Order]:
-    result = session.execute(
-        select(Order).where(Order.user_id == user_id)
-    )
-    product = result.scalars().all()
-    return product
+    orders = session.exec(select(Order).where(Order.user_id == user_id)).all()
+    return orders
 
 def get_order_items_by_order_id(order_id: int, session: Session) -> list[OrderItem]:
-    result = session.execute(
-        select(OrderItem).where(OrderItem.order_id == order_id)
-    )
-    product = result.scalars().all()
-    return product
+    order_items = session.exec(select(OrderItem).where(OrderItem.order_id == order_id)).all()
+    return order_items
 
 def create_order(user_id: int, total_price: float, delivery_address: str, session: Session) -> Order:
-    order = Order(user_id=user_id, total_price=total_price, delivery_address=delivery_address, session=session)
+    order = Order(user_id=user_id, total_price=total_price, delivery_address=delivery_address)
     session.add(order)
     session.commit()
     session.refresh(order)
